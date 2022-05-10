@@ -1,28 +1,35 @@
-actor: Tester
+actor: Tests
 paths:
-    tests: tests
-    log: tests/_output
-    data: tests/_data
-    support: tests/_support
-    envs: tests/_envs
+  output: tests/_output
+  tests: tests
+  log: tests/_output
+  data: tests/_data
+  support: tests/_support
+  envs: tests/_envs
 settings:
-    colors: true
-    memory_limit: 1024M
+  colors: true
+  memory_limit: 1024M
 bootstrap: _bootstrap.php
+modules:
+  enabled:
+    - REST:
+          depends: PhpBrowser
+          url: http://localhost/api/
+          shortDebugResponse: 300
+    - \Helper\Acceptance
 extensions:
-    enabled:
-        - \Codeception\Extension\RunFailed
-        - \Codeception\Extension\Phiremock
-    config:
-        \Codeception\Extension\Phiremock:
-            debug: true
-            start_delay: 1
-            suites:
-              - unit
-            extra_instances:
-              -
-                listen: 0.0.0.0:18080
-                debug: true
-                expectations_path:
-                server_factory: Mcustiel\Phiremock\Codeception\Module\Tests\Helpers\FactoryWithGuzzle7
-                logs_path: tests/_output/phiremock.extra.log
+  enabled:
+    - \Codeception\Extension\RunFailed
+    - \Codeception\Extension\Phiremock
+  config:
+    \Codeception\Extension\Phiremock:
+      debug: true
+      start_delay: 1
+      suites:
+        - unit
+      extra_instances:
+        - listen: 0.0.0.0:18080
+          debug: true
+          expectations_path:
+          server_factory: Mcustiel\Phiremock\Codeception\Module\Tests\Helpers\FactoryWithGuzzle7
+          logs_path: tests/_output/phiremock.extra.log

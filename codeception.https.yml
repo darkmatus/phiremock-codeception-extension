@@ -1,5 +1,6 @@
-actor: Tester
+actor: AcceptanceTester
 paths:
+    output: tests/_output
     tests: tests
     log: tests/_output
     data: tests/_data
@@ -8,6 +9,10 @@ paths:
 settings:
     colors: true
     memory_limit: 1024M
+modules:
+  enabled:
+    - REST
+    - \Helper\Acceptance
 bootstrap: _bootstrap.php
 extensions:
     enabled:

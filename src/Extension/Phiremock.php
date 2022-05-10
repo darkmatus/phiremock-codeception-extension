@@ -35,7 +35,7 @@ class Phiremock extends CodeceptionExtension
     ];
 
     /** @var array */
-    protected $config = Config::DEFAULT_CONFIG;
+    protected array $config = Config::DEFAULT_CONFIG;
 
     /** @var PhiremockProcessManager */
     private $process;
