@@ -20,13 +20,13 @@ namespace Codeception\Extension;
 
 use Codeception\Event\SuiteEvent;
 use Codeception\Exception\ConfigurationException;
-use Codeception\Extension as CodeceptionExtension;
+use Codeception\Extension;
 use Codeception\Suite;
 use Mcustiel\Phiremock\Codeception\Extension\Config;
 use Mcustiel\Phiremock\Codeception\Extension\PhiremockProcessManager;
 use Mcustiel\Phiremock\Codeception\Extension\ReadinessCheckerFactory;
 
-class Phiremock extends CodeceptionExtension
+class Phiremock extends Extension
 {
     /** @var array */
     public static $events = [
@@ -37,22 +37,21 @@ class Phiremock extends CodeceptionExtension
     /** @var array */
     protected array $config = Config::DEFAULT_CONFIG;
 
-    /** @var PhiremockProcessManager */
-    private $process;
+    /** @var ?PhiremockProcessManager */
+    private ?PhiremockProcessManager $process = null;
 
-    /** @var Config */
-    private $extensionConfig;
+    /** @var ?Config */
+    private ?Config $extensionConfig;
 
-    /**  @throws ConfigurationException */
-    public function __construct(
-        array $config,
-        array $options,
-        PhiremockProcessManager $process = null
-    ) {
+    /**
+     * @throws \Codeception\Exception\ConfigurationException
+     * @return void
+     */
+    public function _initialize(): void
+    {
         $this->setDefaultLogsPath();
-        parent::__construct($config, $options);
         $this->extensionConfig = new Config($this->config, $this->getOutputCallable());
-        $this->initProcess($process);
+        $this->initProcess($this->process);
     }
 
     public function startProcess(SuiteEvent $event): void
